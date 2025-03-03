@@ -69,6 +69,4 @@ This repository demonstrates how to export a Huggingface embedding model to ONNX
 └── benchmarks/               # Benchmarking scripts and configurations
 ```
 
-## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
