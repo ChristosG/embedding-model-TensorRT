@@ -1,0 +1,28 @@
+name: "tokenizer"
+backend: "python"
+max_batch_size: 64
+input [
+  {
+    name: "sentences"
+    data_type: TYPE_STRING
+    dims: [ -1 ]
+  }
+]
+output [
+  {
+    name: "input_ids"
+    data_type: TYPE_INT32
+    dims: [ 64 ]
+  },
+  {
+    name: "attention_mask"
+    data_type: TYPE_INT32
+    dims: [ 64 ]
+  }
+]
+instance_group [
+  {
+    count: 1
+    kind: KIND_CPU
+  }
+]

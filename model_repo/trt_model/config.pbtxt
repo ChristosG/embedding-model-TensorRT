@@ -1,0 +1,33 @@
+name: "trt_model"
+platform: "tensorrt_plan"
+max_batch_size: 64
+input [
+  {
+    name: "input_ids"
+    data_type: TYPE_INT32
+    dims: [ 64 ]
+  },
+  {
+    name: "attention_mask"
+    data_type: TYPE_INT32
+    dims: [ 64 ]
+  }
+]
+output [
+  {
+    name: "embeddings"
+    data_type: TYPE_FP32
+    dims: [ 384 ]
+  }
+]
+instance_group [
+  {
+    count: 1
+    kind: KIND_GPU
+    gpus: [ 0 ]
+  }
+]
+dynamic_batching {
+  preferred_batch_size: [ 4, 8, 16 ]
+  max_queue_delay_microseconds: 100
+}

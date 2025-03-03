@@ -1,0 +1,53 @@
+name: "ensemble_mpnet"
+platform: "ensemble"
+max_batch_size: 64
+input [
+  {
+    name: "sentences"
+    data_type: TYPE_STRING
+    dims: [ -1 ]
+  }
+]
+output [
+  {
+    name: "embeddings"
+    data_type: TYPE_FP32
+    dims: [ 384 ]
+  }
+]
+ensemble_scheduling {
+  step [
+    {
+      model_name: "tokenizer"
+      model_version: -1
+      input_map {
+         key: "sentences"
+         value: "sentences"
+      }
+      output_map {
+         key: "input_ids"
+         value: "input_ids"
+      }
+      output_map {
+         key: "attention_mask"
+         value: "attention_mask"
+      }
+    },
+    {
+      model_name: "trt_model"
+      model_version: -1
+      input_map {
+         key: "input_ids"
+         value: "input_ids"
+      }
+      input_map {
+         key: "attention_mask"
+         value: "attention_mask"
+      }
+      output_map {
+         key: "embeddings"
+         value: "embeddings"
+      }
+    }
+  ]
+}
